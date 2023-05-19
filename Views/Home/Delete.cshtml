@@ -1,0 +1,88 @@
+@model Project.Models.AlbumDetails
+@* Page Title *@
+@{
+    ViewData["Title"] = "Delete Album";
+}
+<h4>@ViewData["Title"]</h4>
+
+<div class="container" style="width: 100%; margin-top:2%">
+    @* BeginForm - Html Helper - used Post Method *@
+    @using (Html.BeginForm("Delete", "Home", FormMethod.Post))
+    {
+        @* Table for album detail *@
+        <table class="table table-hover table-sm">
+            <thead>
+                <tr>
+                    <th style="width:15%" class="text-left">Album Title: </th>
+                    <th style="width:15%" class="text-left">Artist</th>
+                    <th style="width:70%" class="text-left"></th>
+
+                </tr>
+            </thead>
+
+            <tr>
+                <td style="width:15%" class="text-left">
+                    @Html.DisplayFor(model => model.AlbumDetailsViwList[0].Title, new {@class = "form-control"})
+                </td>
+                <td style="width:15%" class="text-left">
+                    @Html.DisplayFor(model => model.AlbumDetailsViwList[0].ArtistName, new {@class = "form-control"})
+                </td>
+                <th style="width:70%" class="text-left"></th>
+
+            </tr>
+
+        </table>
+        <br>
+        @* Table for tracks detail *@
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th class="text-center">Track Name</th>
+                    <th class="text-center">Media Typed</th>
+                    <th class="text-center">Genre</th>
+                    <th class="text-center">Composer</th>
+                    <th class="text-center">Milliseconds</th>
+                    <th class="text-center">Bytes</th>
+                    <th class="text-center">Unit Price</th>
+                </tr>
+            </thead>
+            @* for loop has beed used to retrive all tracks record *@
+            @for (int i = 0; i < Model.AlbumDetailsViwList.Count; i++)
+            {
+                @Html.HiddenFor(model => model.AlbumDetailsViwList[i].ArtistId)
+                @Html.HiddenFor(model => model.AlbumDetailsViwList[i].AlbumId)
+                @Html.HiddenFor(model => model.AlbumDetailsViwList[i].TrackId)
+                @Html.HiddenFor(model => model.AlbumDetailsViwList[i].MTypeId)
+                @Html.HiddenFor(model => model.AlbumDetailsViwList[i].GenreId)
+                <tr>
+                    <td class="text-left">
+                        @Html.DisplayFor(model => model.AlbumDetailsViwList[i].TrackName, new {@class = "form-control"})
+                    </td>
+                    <td class="text-center">
+                        @Html.DisplayFor(model => model.AlbumDetailsViwList[i].MediaTypedName, new {@class = "form-control"})
+                    </td>
+                    <td class="text-center">
+                        @Html.DisplayFor(model => model.AlbumDetailsViwList[i].GenreName, new {@class = "form-control"})
+                    </td>
+                    <td class="text-right" style="width:12%;">
+                        @Html.DisplayFor(model => model.AlbumDetailsViwList[i].Composer, new {@class = "form-control"})
+                    </td>
+                    <td class="text-right" style="width:12%;">
+                        @Html.DisplayFor(model => model.AlbumDetailsViwList[i].Milliseconds, new {@class = "form-control"})
+                    </td>
+                    <td class="text-right" style="width:8%;">
+                        @Html.DisplayFor(model => model.AlbumDetailsViwList[i].Bytes, new {@class = "form-control"})
+                    </td>
+                    <td class="text-right" style="width:20%;">
+                        @Html.DisplayFor(model => model.AlbumDetailsViwList[i].UnitPrice, new {@class = "form-control"})
+                    </td>
+
+                </tr>
+
+            }
+        </table>
+        @* Submit button *@
+        <input type="submit" value="Delete Album" class="btn btn-block btn-primary mt-2" style="width:20%;" />
+    }
+
+</div>

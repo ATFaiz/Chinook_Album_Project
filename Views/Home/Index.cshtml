@@ -1,0 +1,61 @@
+﻿@model IEnumerable<Project.Models.HomeIndexViewModel>
+
+@* Heading *@
+@{
+    ViewData["Title"] = "Albums";
+}
+<h4>@ViewData["Title"]</h4>
+
+@* Edit Message *@
+<p style="color:orange ; background-color:LightGrey ">@TempData["EditMessage"]</p>
+@* Insert Message *@
+<p style="color:Green ; background-color:LightGrey ">@TempData["InsertMessage"]</p>
+@* Delete Message *@
+<p style="color:Red ; background-color:LightGrey ">@TempData["DeleteMessage"]</p>
+
+
+<div class=" table-responsive{-sm|-md|-lg|-xl}">
+    <p>
+        @* Html Helper form with Get Method has been used for search *@
+        @using (Html.BeginForm("Index", "Home", FormMethod.Get))
+        {
+            <b>Search By:</b> @Html.RadioButton("searchBy", "Name", true)<text>Title </text> 
+            @Html.RadioButton("searchBy","Artist")<text>Artist</text><br/>
+            @Html.TextBox("Search")<input type="submit" value="Search" />
+        }
+    </p>
+
+    @* Html Helper action link - take to Create page *@
+    <p class="text-left">@Html.ActionLink("Create New Album","Create")</p>
+
+    @* Table - Albums *@
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th class="w-5 text-left">AlbumId</th>
+                <th class="w-5 text-center">Title</th>
+                <th class="w-25 text-center">Artist</th>
+                <th class="w-50 text-left"></th>
+            </tr>
+        </thead>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td class="text-left">@item.AlbumId</td>
+                <td class="text-center">@item.Title</td>
+                <td class="text-center">@item.ArtistName</td>
+                <td class="text-right">
+
+                    @* Html Helper - action link for Details, Edit and Delete pages *@
+                    @Html.ActionLink("Details","Details", new{id=item.AlbumId})|
+                    @Html.ActionLink("Edit","Edit", new{id=item.AlbumId})|
+                    @Html.ActionLink("Delete","Delete", new{id=item.AlbumId})
+
+                </td>
+            </tr>
+        }
+    </table>
+
+
+
+</div>

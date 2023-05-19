@@ -1,0 +1,113 @@
+@model Project.Models.AlbumDetails
+
+@* Page Heading *@
+@{
+    ViewData["Title"] = "Create New Album";
+}
+<h3>@ViewData["Title"]</h3>
+
+<div class="container" style="width: 100%; margin-top:2%">
+    @* Begin Form - html Helper, post method has been used to create new album and tracks *@
+    @using (Html.BeginForm("Create","Home", FormMethod.Post)){
+    @*Album Title and Artist Name fields  *@
+    @Html.TextBoxFor(model => model.Title, new {@class = "form-control", @placeholder="Album Title",style="width:30%;"})
+    @Html.ValidationMessageFor(model => model.Title)
+    <br>
+    @Html.TextBoxFor(model => model.ArtistName, new {@class = "form-control", @placeholder="Artist Name",style="width:30%;"})
+   <br>
+    @* Table has been used for adding the album tracks *@
+   <h5>Add Tracks</h5>
+       <table class="table table-hover">
+        <thead>
+        <tr>
+            <th class="text-center">Track Name</th>
+            <th class="text-center">Media Typed</th>
+            <th class="text-center">Genre</th>
+            <th class="text-center">Composer</th>
+            <th class="text-center">Milliseconds</th>
+            <th class="text-center">Bytes</th>
+            <th class="text-center">Unit Price</th>
+        </tr>
+        </thead>
+          <tbody id="MyForm">
+              <tr > 
+                <td class="text-left">
+                    @Html.TextBoxFor(model => model.AlbumDetailsViwList[0].TrackName, new {@class = "form-control"})
+                </td>
+                @* Media Type dropdown list *@
+                <td class="text-center">
+                    @Html.DropDownListFor(Model=> Model.AlbumDetailsViwList[0].MTypeId, new SelectList(ViewBag.MediaTypeList,"MediaTypeId","Name"),
+        "--Select--", new {@class="form-control"} )
+                </td>
+                @* Genre dropdown list *@
+                <td class="text-center">
+                    @Html.DropDownListFor(Model=>Model.AlbumDetailsViwList[0].GenreId, new SelectList(ViewBag.GenreList,"GenreId", "Name"),
+        "--Select--", new {@class="form-control"} )
+                </td>
+                <td class="text-right" style="width:12%;">
+                    @Html.TextBoxFor(model => model.AlbumDetailsViwList[0].Composer, new {@class = "form-control"})
+                </td>
+                <td class="text-right" style="width:12%;">
+                    @Html.TextBoxFor(model => model.AlbumDetailsViwList[0].Milliseconds, new {@class = "form-control"})
+                </td>
+                <td class="text-right" style="width:8%;">
+                    @Html.TextBoxFor(model => model.AlbumDetailsViwList[0].Bytes, new {@class = "form-control"})
+                </td>
+                <td class="text-right" style="width:20%;">
+                    @Html.TextBoxFor(model => model.AlbumDetailsViwList[0].UnitPrice, new {@class = "form-control"})
+                </td>
+
+            </tr>
+          </tbody>
+        
+        <tr id="NewForm"></tr>
+   
+    </table>
+
+    <div class="container w-100">
+    <div class="row">
+      @* button for adding track row *@
+    <div class="col-1.5">
+       <input type="button" id="AddTrack" value="Add Track" class="btn btn-success mt-2"/>
+    </div>
+    @* button for removing track row *@
+    <div class="col">
+      <input type="button" id="RemoveTrack" value="Remove Track" class="btn btn-danger mt-2  "/>
+    </div>
+
+    <div class="col-3 ">
+       <input type="submit" value="Create Album" class="btn btn-block btn-primary mt-2" />
+    </div>
+    </div>
+    </div>
+
+   
+      }
+  
+</div>
+
+@* jquery - click function has been used for adding and removing track rows *@
+<script type="text/javascript">  
+    $(document).ready(function (){ 
+
+        $("#AddTrack").click(function(){
+           var count = $('#MyForm tr').length;
+           var fields = $("#MyForm").find('tr:first').html();
+            fields = fields.replaceAll("_0__", "_"+count+"__");
+            fields = fields.replaceAll("[0]","["+count+"]");
+                   
+            $("#MyForm").append("<tr>"+ fields +"</tr>");
+        });
+
+        $("#RemoveTrack").click(function(){
+
+            var $last = $('#MyForm').find('tr:last');
+            if($last.is(':first-child')){
+
+            }else {
+                $last.remove()
+            }
+        });
+
+     });
+</script>

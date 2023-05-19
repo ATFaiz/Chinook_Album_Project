@@ -1,0 +1,64 @@
+@model IEnumerable<Project.Models.AlbumDetails>
+
+@* Page Heading *@
+@{
+    ViewData["Title"] = "Album Details";
+}
+<h3>@ViewData["Title"]</h3>
+
+@* set condition - if model is not null then display the details *@
+@if (Model != null)
+{
+    @* Table - album detail *@
+    <table class="table table-hover table-sm">
+        <thead>
+            <tr>
+                <th style="width:15%" class="text-left">Album Title: </th>
+                <th style="width:15%" class="text-left">Artist</th>
+                <th style="width:70%" class="text-left"></th>
+            </tr>
+        </thead>
+        @* forech loop has been used for diplayig album title and artist name *@
+        @foreach (var item in Model.Select(s => new { s.Title, s.ArtistName }).Distinct())
+        {
+            <tr>
+                <td style="width:15%" class="text-left">@item.Title</td>
+                <td style="width:15%" class="text-left">@item.ArtistName</td>
+                <th style="width:70%" class="text-left"></th>
+            </tr>
+        }
+    </table>
+    <br>
+    <br>
+
+    @* Album tracks table *@
+    <h5>Album Tracks:</h5>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th class="text-center">Track Name</th>
+                <th class="text-center">Media Type</th>
+                <th class="text-center">Genre</th>
+                <th class="text-center">Composer</th>
+                <th class="text-center">Millisconds</th>
+                <th class="text-center">Bytes</th>
+                <th class="text-center">Price</th>
+
+            </tr>
+        </thead>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td class="text-center">@item.TrackName</td>
+                <td class="text-center">@item.MediaTypedName</td>
+                <td class="text-center">@item.GenreName</td>
+                <td class="text-center">@item.Composer</td>
+                <td class="text-center">@item.Milliseconds</td>
+                <td class="text-center">@item.Bytes</td>
+                <td class="text-center">@item.UnitPrice</td>
+            </tr>
+        }
+    </table>
+
+
+}

@@ -1,0 +1,91 @@
+ @model Project.Models.AlbumDetails
+
+@* Heading *@
+@{
+    ViewData["Title"] = "Update Album Details";
+}
+<h4>@ViewData["Title"]</h4>
+
+
+
+<div class="container" style="width: 100%; margin-top:2%">
+    @* Begin Form - Html Helper - Post Method used *@
+    @using (Html.BeginForm("Update","Home", FormMethod.Post)){
+
+     @Html.TextBoxFor(model => model.AlbumDetailsViwList[0].Title, new {@class = "form-control", @placeholder="Album Title",style="width:30%;"})
+    <br>
+    @* dropdown list for artist name *@
+      @Html.DropDownListFor(model=> model.AlbumDetailsViwList[0].ArtistId, new SelectList(ViewBag.ArtistList,"ArtistId","Name"),
+    "--Select--", new {@class="form-control",style="width:30%;"} )
+   
+   <br>
+   <h5>Tracks</h5>
+
+    //Tracks Table 
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th class="text-center">Track Name</th>
+            <th class="text-center">Media Typed</th>
+            <th class="text-center">Genre</th>
+            <th class="text-center">Composer</th>
+            <th class="text-center">Milliseconds</th>
+            <th class="text-center">Bytes</th>
+            <th class="text-center">Unit Price</th>
+        </tr>
+        </thead>
+
+        @* for loop has been used for displying tracks details *@
+        @for (int i = 0; i < Model.AlbumDetailsViwList.Count; i++)
+        {
+            @* hidden fields *@
+            @Html.HiddenFor(model => model.AlbumDetailsViwList[i].ArtistId)
+            @Html.HiddenFor(model => model.AlbumDetailsViwList[i].AlbumId)
+             @Html.HiddenFor(model => model.AlbumDetailsViwList[i].TrackId)  
+        <tr>
+            <td class="text-left" style="width:20%;">
+                @Html.TextBoxFor(model => model.AlbumDetailsViwList[i].TrackName, new {@class = "form-control"})
+            </td>
+            @* Media type dorpdown list *@
+            <td class="text-center"style="width:17%;">
+                @Html.DropDownListFor(model=> model.AlbumDetailsViwList[i].MTypeId, new SelectList(ViewBag.MediaTypeList,"MediaTypeId","Name"),
+    "--Select--", new {@class="form-control"} )
+               
+            </td>
+            @* Genre dropdown list *@
+            <td class="text-center" style="width:18%;">
+                 @Html.DropDownListFor(model=>model.AlbumDetailsViwList[i].GenreId, new SelectList(ViewBag.GenreList,"GenreId", "Name"),
+    "--Select--", new {@class="form-control"} )
+            </td>
+            <td class="text-center" style="width:11%;">
+                 @Html.TextBoxFor(model => model.AlbumDetailsViwList[i].Composer, new {@class = "form-control"})
+            </td>
+             <td class="text-center" style="width:12%;">
+                 @Html.TextBoxFor(model => model.AlbumDetailsViwList[i].Milliseconds, new {@class = "form-control"})
+            </td>
+             <td class="text-center" style="width:10%;">
+                 @Html.TextBoxFor(model => model.AlbumDetailsViwList[i].Bytes, new {@class = "form-control"})
+            </td>
+             <td class="text-center" style="width:13%;">
+                 @Html.TextBoxFor(model => model.AlbumDetailsViwList[i].UnitPrice, new {@class = "form-control"})
+            </td>
+
+        </tr>
+   
+        }
+      
+    </table>
+
+       @* submit button *@
+        <div class="container w-100">
+          <div class="row">
+             <div class="col-3">
+         <input type="submit" value="Update Album Details" class="btn btn-block btn-primary mt-2"/>
+             </div>
+           </div>
+        </div>
+
+    }
+  
+</div>
+
